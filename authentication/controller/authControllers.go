@@ -2,8 +2,8 @@ package controller
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/i-am-yuvi/tbnh/authentication/database"
-	"github.com/i-am-yuvi/tbnh/authentication/models"
+	"github.com/i-am-yuvi/tbnh/database"
+	"github.com/i-am-yuvi/tbnh/models"
 	"golang.org/x/crypto/bcrypt"
 )
 

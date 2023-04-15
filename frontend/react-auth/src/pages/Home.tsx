@@ -1,92 +1,54 @@
-import React from 'react';
-import { useState, FormEvent } from 'react';
-import Amadeus from 'amadeus';
+// src/components/Home.tsx
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Home.css'; 
 
+interface Hotel {
+  id: number;
+  name: string;
+  price: number;
+  place: string;
+  rooms: number;
+}
 
-const Home = () =>{
+const Home = () => {
+  const [hotelResults, setHotelResults] = useState<Hotel[]>([]);
+  const navigate = useNavigate();
 
-     interface Hotel {
-          hotel: {
-            name: string;
-            rating: number;
-            address: {
-              fullAddress: string;
-            };
-          };
-          offers: {
-            price: {
-              total: number;
-              currency: string;
-            };
-          }[];
-     }
+  useEffect(() => {
+    fetchHotels();
+  }, []);
 
-     const amadeus = new Amadeus({
-          clientId: process.env.REACT_APP_AMADEUS_CLIENT_ID || '',
-          clientSecret: process.env.REACT_APP_AMADEUS_CLIENT_SECRET || '',
-        });
-        
+  const fetchHotels = async () => {
+    try {
+      const response = await fetch('/api/hotels'); // Replace with the correct API endpoint
+      const hotels: Hotel[] = await response.json();
+      setHotelResults(hotels);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-     const [place, setPlace] = useState('');
-     const [arrivalDate, setArrivalDate] = useState('');
-     const [departureDate, setDepartureDate] = useState('');
-     const [hotelResults, setHotelResults] = useState<Hotel[]>([]);
+  const redirectToAddHotel = () => {
+    navigate('/addHotel');
+  };
 
-
-     const handleSubmit = async (event: FormEvent) => {
-          event.preventDefault();
-          const hotels = await fetchHotels(place, arrivalDate, departureDate);
-          setHotelResults(hotels);
-        };
-        
-
-     const fetchHotels = async (cityCode: string, arrivalDate: string, departureDate: string) => {
-          try {
-            const response = await amadeus.referenceData.locations.hotels.get({
-              cityCode,
-              checkInDate: arrivalDate,
-              checkOutDate: departureDate,
-            });
-        
-            return response.data;
-          } catch (error) {
-            console.error(error);
-            return [];
-          }
-     };
-        
-
-     return(
-          <div>
-               <h1>Home Page</h1>
-               <form onSubmit={handleSubmit}>
-                    <br/>
-                    <input type="text" placeholder="Place of visit" value={place} onChange={(e) => setPlace(e.target.value)}/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <p>Date of Visit:</p>
-                    <input type="date" value={arrivalDate} onChange={(e) => setArrivalDate(e.target.value)}/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <p>Date of Leave:</p>
-                    <input type="date" value={departureDate} onChange={(e) => setDepartureDate(e.target.value)}/>
-                    <br/>
-                    <br/>
-                    <button type="submit">Search Hotels</button>
-                    <br/>
-               </form>
-               {hotelResults.slice(0, 5).map((hotel, index) => (
-                    <div key={index}>
-                         <h2>{hotel.hotel.name}</h2>
-                         <p>Rating: {hotel.hotel.rating}</p>
-                         <p>Address: {hotel.hotel.address.fullAddress}</p>
-                         <p>Price: {hotel.offers[0].price.total} {hotel.offers[0].price.currency}</p>
-                    </div>
-               ))}
+  return (
+    <div>
+      <h1>Home Page</h1>
+      <button onClick={redirectToAddHotel}>Add Hotel</button>
+      <div className="hotel-container">
+        {hotelResults.map((hotel) => (
+          <div key={hotel.id} className="hotel-card">
+            <h2>{hotel.name}</h2>
+            <p>Place: {hotel.place}</p>
+            <p>Rooms: {hotel.rooms}</p>
+            <p>Price: {hotel.price}</p>
           </div>
-     );
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default Home;

@@ -1,7 +1,7 @@
 package database
 
 import (
-	"github.com/i-am-yuvi/tbnh/authentication/models"
+	"github.com/i-am-yuvi/tbnh/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -18,5 +18,10 @@ func Connect() {
 
 	DB = connection
 
+	//Migrating the user schema
 	connection.AutoMigrate(&models.User{})
+
+	//Migrating the hotel schema
+	connection.AutoMigrate(&models.Hotel{})
+
 }
