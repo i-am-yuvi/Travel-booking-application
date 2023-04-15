@@ -22,8 +22,8 @@ const Home = () =>{
      }
 
      const amadeus = new Amadeus({
-          clientId: process.env.AMADEUS_APIKEY || '',
-          clientSecret: process.env.AMADEUS_SECRETKEY || '',
+          clientId: process.env.REACT_APP_AMADEUS_CLIENT_ID || '',
+          clientSecret: process.env.REACT_APP_AMADEUS_CLIENT_SECRET || '',
         });
         
 
@@ -77,7 +77,7 @@ const Home = () =>{
                     <button type="submit">Search Hotels</button>
                     <br/>
                </form>
-               {hotelResults.map((hotel, index) => (
+               {hotelResults.slice(0, 5).map((hotel, index) => (
                     <div key={index}>
                          <h2>{hotel.hotel.name}</h2>
                          <p>Rating: {hotel.hotel.rating}</p>

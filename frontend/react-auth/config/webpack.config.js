@@ -104,6 +104,8 @@ module.exports = function (webpackEnv) {
 
   const shouldUseReactRefresh = env.raw.FAST_REFRESH;
 
+  
+
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
     const loaders = [
@@ -293,6 +295,12 @@ module.exports = function (webpackEnv) {
       ],
     },
     resolve: {
+      fallback: {
+        util: require.resolve('util/'),
+        https: require.resolve('https-browserify'),
+        http: require.resolve('stream-http'),
+        
+      },
       // This allows you to set a fallback for where webpack should look for modules.
       // We placed these paths second because we want `node_modules` to "win"
       // if there are any conflicts. This matches Node resolution mechanism.
