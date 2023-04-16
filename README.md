@@ -32,7 +32,7 @@ Hotel Booking Application is a full-stack web application that allows users to s
 1. Clone the repository:
 
 ```
-git clone https://github.com/yourusername/Travel-booking-napptive-hackthon.git
+git clone https://github.com/yourusername/Travel-booking-application.git
 ```
 2. Change to the project directory:
 
@@ -63,7 +63,7 @@ npm start
 
 2. Start the Golang backend server:
 ```
-cd backend && go run main.go
+cd .. && go run main.go
 ```
 
 3. Open a web browser and navigate to `http://localhost:3000` to view the application.
