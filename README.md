@@ -48,7 +48,7 @@ cd frontend && npm install
 4. Install backend dependencies:
 
 ```
-cd backend && go mod download
+cd .. && go mod download
 ```
 
 5. Set up your PostgreSQL database and update the connection details in the backend configuration.
