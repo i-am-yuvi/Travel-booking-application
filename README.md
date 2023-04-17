@@ -108,6 +108,7 @@ git push origin feature/my-new-feature
 ```
 
 5. Submit a pull request to the original repository.
+- open a pull request after opening the issue
 
 ## License
 
